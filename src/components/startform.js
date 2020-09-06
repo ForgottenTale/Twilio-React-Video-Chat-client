@@ -12,7 +12,7 @@ const StartForm = ({ storeToken }) => {
       identity: name,
     }
     var jwt ="";
-    var url = "http://192.168.31.168:5000/jwt/";
+    var url = "https://videochat-servers.herokuapp.com/jwt/";
     await axios.post(url, data).then(res => {
       jwt = res.data;
     })
