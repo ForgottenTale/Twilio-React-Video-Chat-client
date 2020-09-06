@@ -64,6 +64,11 @@ function Video({token}){
                     remoteVidRef.current.appendChild(track.attach());
                 });
               });
+
+              room.on('participantDisconnected', participant => {
+                console.log(`Participant disconnected: ${participant.identity}`);
+              });
+              
               
 
               
