@@ -1,13 +1,14 @@
 import React,{useState} from 'react';
-import StartForm from './components/startform';
-import Video from './components/video'
+import Join from './components/join';
+import Video from './components/video';
+import './components/scss/app.scss'
 
 function App() {
 
   const [token, setToken] = useState(false);
   return (
     <div className="App">
-     {!token ? <StartForm storeToken={setToken} /> : <Video token={token}/>}
+     {!token ? <Join storeToken={setToken} /> : <Video token={token}/>}
     </div>
   );
 }
