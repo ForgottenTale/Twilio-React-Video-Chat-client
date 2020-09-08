@@ -1,5 +1,7 @@
 import React, { useEffect, useRef } from 'react';
+import "./scss/video.scss"
 const TwilioVideo = require('twilio-video');
+
 
 
 
@@ -58,9 +60,9 @@ function Video({ token }) {
   }, [token])
   return (
 
-    <div>
-      <div ref={localVidRef} />
-      <div ref={remoteVidRef} />
+    <div className="video">
+      <div ref={localVidRef} className = "video__local"/>
+      <div ref={remoteVidRef}className = "video__remote"/>
     </div>
   )
 }
