@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React from "react";
 
 import './scss/join.scss';
 import { TextField, Button } from '@material-ui/core';
@@ -24,7 +24,6 @@ function StartForm({
   handleUsernameChange,
   handleRoomNameChange,
   handleSubmit,
-  storeToken
 }) {
   
   const classes = useStyles();

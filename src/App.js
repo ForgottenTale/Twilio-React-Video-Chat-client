@@ -1,6 +1,5 @@
 import React,{useState,useCallback } from 'react';
 import Join from './components/join';
-import Video from './components/video';
 import './components/scss/app.scss';
 import Room from './components/room'
 import axios from "axios";
@@ -39,6 +38,7 @@ function App() {
   }, []);
 
   const handleLogout = useCallback(event => {
+    event.preventDefault()
     setToken(null)
   }, []);
   return (
