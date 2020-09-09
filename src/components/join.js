@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import './scss/join.scss';
-import { Grid, TextField, Button, FormControl } from '@material-ui/core';
+import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles({
@@ -30,6 +30,7 @@ function StartForm({ storeToken }) {
 
     var data = {
       identity: name,
+      roomname:room
     }
     var jwt = "";
     var url = "http://192.168.31.168:5000/jwt/";
