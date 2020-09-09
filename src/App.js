@@ -1,7 +1,8 @@
 import React,{useState} from 'react';
 import Join from './components/join';
 import Video from './components/video';
-import './components/scss/app.scss'
+import './components/scss/app.scss';
+
 
 function App() {
 

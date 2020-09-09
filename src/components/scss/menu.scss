@@ -1,0 +1,26 @@
+.Menu{
+    opacity: 0;
+    height: 80px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+   
+   
+    
+}
+.MuiIconButton-label svg{
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    border: 1px black solid;
+}
+.Menu:hover{
+    opacity: 1;
+    
+    background-color: white;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}

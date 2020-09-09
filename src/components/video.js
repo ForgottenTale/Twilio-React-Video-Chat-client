@@ -1,34 +1,40 @@
-import React, { useEffect, useRef } from 'react';
-import "./scss/video.scss"
+import React, { useEffect, useRef, useState } from 'react';
+import "./scss/video.scss";
+import Menu from './menu';
+
 const TwilioVideo = require('twilio-video');
 
 
-
+var disableAudio;
+var roomg;
 
 function Video({ token }) {
+const[mic, setMic]=useState(true);
+  // const localVidRef = useRef()
 
-  const localVidRef = useRef()
   const remoteVidRef = useRef()
-
+ var set;
   useEffect(() => {
 
     TwilioVideo.connect(token, { video: true, audio: true, name: "test" }).then(
       room => {
         // Attach the local video
-        TwilioVideo.createLocalVideoTrack().then(track => {
-          localVidRef.current.appendChild(track.attach())
-        })
 
+        roomg = room;
+        TwilioVideo.createLocalVideoTrack().then(track => {
+          remoteVidRef.current.appendChild(track.attach())
+        })
+     
         // Attach the participants video
         room.participants.forEach(participant => {
           participant.tracks.forEach(publication => {
             if (publication.track) {
-              localVidRef.current.appendChild(publication.track.attach());
+              remoteVidRef.current.appendChild(publication.track.attach());
             }
           });
 
           participant.on('trackSubscribed', track => {
-            localVidRef.current.appendChild(track.attach());
+            remoteVidRef.current.appendChild(track.attach());
           });
         });
 
@@ -52,17 +58,44 @@ function Video({ token }) {
           console.log(`Participant disconnected: ${participant.identity}`);
         });
 
+      
+        
+        
 
+        if(!mic){
+          room.localParticipant.videoTracks.forEach(publication => {
+            publication.track.stop();
+            publication.unpublish();
+            console.log(mic);
+          });
+          
+        }
+        if(mic){
+          room.localParticipant.audioTracks.forEach(publication => {
+            publication.track.enable();
+            console.log(mic);
+            room.localParticipant.videoTracks.forEach(publication => {
+              publication.track.enable();
+            });
+          });
+        }
 
 
       }
     )
-  }, [token])
+  }, [mic])
+
+  function set(){
+    setMic(false);console.log("off");
+    
+    
+     
+  }
   return (
 
-    <div className="video">
-      <div ref={localVidRef} className = "video__local"/>
-      <div ref={remoteVidRef}className = "video__remote"/>
+    <div className="video" >
+      <div ref={remoteVidRef}className = "video__remote"></div>
+      <Menu room={set}/>
     </div>
   )
 }
