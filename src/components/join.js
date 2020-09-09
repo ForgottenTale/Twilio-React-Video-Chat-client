@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React, { useState, useCallback } from "react";
+
 import './scss/join.scss';
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -20,29 +20,15 @@ const useStyles = makeStyles({
     
   }
 });
-function StartForm({ storeToken }) {
-  const [name, setName] = useState("")
-  const [room, setRoom] = useState("")
+function StartForm({
+  handleUsernameChange,
+  handleRoomNameChange,
+  handleSubmit,
+  storeToken
+}) {
+  
   const classes = useStyles();
 
-  const handleSubmit = async event => {
-    event.preventDefault()
-
-    var data = {
-      identity: name,
-      roomname:room
-    }
-    var jwt = "";
-    var url = "http://192.168.31.168:5000/jwt/";
-    await axios.post(url, data).then(res => {
-      jwt = res.data;
-    })
-      .catch(error => {
-        console.error(error)
-      })
-
-    storeToken(jwt)
-  }
 
   return (
 
@@ -52,11 +38,10 @@ function StartForm({ storeToken }) {
         margin="normal"
         id="name"
         name="name"
-        value={name}
         variant="filled"
         className={classes.root}
         InputLabelProps={{ className: "joinForm__label" }}
-        onChange={e => setName(e.target.value)}
+        onChange={handleUsernameChange}
          />
 
       <TextField 
@@ -67,7 +52,7 @@ function StartForm({ storeToken }) {
         InputLabelProps={{ className: "joinForm__label" }}
         className={classes.root}
         variant="filled"
-        onChange={e => setRoom(e.target.value)} />
+        onChange={handleRoomNameChange} />
 
       <Button 
       type="submit" 
