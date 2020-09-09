@@ -7,6 +7,8 @@ const Room = ({ roomName, token, handleLogout }) => {
     const [room, setRoom] = useState(null);
     const [participants, setParticipants] = useState([]);
 
+    const [toggleAudio, setToggleAudio] = useState(true);
+    const [toggleVideo, setToggleVideo] = useState(true);
 
     useEffect(() => {
         const participantConnected = participant => {
@@ -39,6 +41,34 @@ const Room = ({ roomName, token, handleLogout }) => {
             });
           };
         }, [roomName, token]);
+
+        const handleCallDisconnect = () => {
+            room.disconnect();
+          };
+        
+          const handleAudioToggle = () => {
+            room.localParticipant.audioTracks.forEach(track => {
+              if (track.track.isEnabled) {
+                track.track.disable();
+              } else {
+                track.track.enable();
+              }
+              setToggleAudio(track.track.isEnabled);
+            });
+          };
+        
+          const handleVideoToggle = () => {
+            room.localParticipant.videoTracks.forEach(track => {
+              if (track.track.isEnabled) {
+                track.track.disable();
+              } else {
+                track.track.enable();
+              }
+              setToggleVideo(track.track.isEnabled);
+            });
+          };
+        
+
         const remoteParticipants = participants.map(participant => (
             <Participant key={participant.sid} participant={participant} />
           ));

@@ -21,7 +21,7 @@ function App() {
     var jwt = "";
     var url = "http://192.168.31.168:5000/jwt/";
     await axios.post(url, data).then(res => {
-      jwt = res.data;
+      jwt = res.data.token;
     })
       .catch(error => {
         console.error(error)
