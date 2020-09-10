@@ -1,0 +1,32 @@
+.participantList{
+    width: 400px;
+    background-color: white;
+
+    &__title
+    {
+        width: 100%;
+        height: 60px;
+        padding-left: 20px;
+        border: none;
+        border-bottom: 1px rgb(221, 221, 221) solid;
+        display: flex;
+        align-items: center;
+
+    }
+
+    &__participant{
+        width: 100%;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        background-color: #F9F9F9;
+
+        &__icon {
+         width: 35px;
+         height: 35px;
+         margin-right: 20px;
+         margin-left: 20px;
+        }
+       
+    }
+}

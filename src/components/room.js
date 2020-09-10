@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from './participant';
+import ParticipantList from './participantList';
 import './scss/room.scss';
+import Menu from './menu'
 
-const Room = ({ roomName, token, handleLogout }) => {
+const Room = ({ roomName, token, setToken }) => {
 
     const [room, setRoom] = useState(null);
     const [participants, setParticipants] = useState([]);
@@ -45,6 +47,7 @@ const Room = ({ roomName, token, handleLogout }) => {
 
     const handleCallDisconnect = () => {
         room.disconnect();
+        setToken(null);
     };
 
     const handleAudioToggle = () => {
@@ -70,20 +73,22 @@ const Room = ({ roomName, token, handleLogout }) => {
     };
 
 
+
     const remoteParticipants = participants.map(participant => (
         <Participant key={participant.sid} participant={participant} />
     ));
 
     return (
         <div className="room">
-            <h2>Room: {roomName}</h2>
-            <button onClick={handleLogout}>Log out</button>
+            {/* <h2>Room: {roomName}</h2>
+            <button onClick={handleLogout}>Log out</button> */}
 
             {room ? (
                 <div className="room__participants">
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
                 </div> ) : ('')}
-
+                <ParticipantList participants= {participants}/>
+            <Menu handleAudioToggle={handleAudioToggle} handleVideoToggle={handleVideoToggle} handleCallDisconnect={handleCallDisconnect} />
         </div>
     );
 

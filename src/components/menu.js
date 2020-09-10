@@ -7,20 +7,20 @@ import CallEndIcon from '@material-ui/icons/CallEnd';
 
 import './scss/menu.scss'
 
-function Menu() {
+function Menu({handleCallDisconnect, handleAudioToggle,handleVideoToggle}) {
 
   return (
     <div className="Menu" color="primary">
-      <IconButton color="primary">
+      <IconButton color="primary" onClick={handleAudioToggle}>
         <MicIcon />
       </IconButton>
-      <IconButton color="primary">
+      <IconButton color="primary" onClick={handleVideoToggle}>
         <VideocamIcon />
       </IconButton>
       <IconButton color="primary">
         <GroupIcon />
       </IconButton>
-      <IconButton color="secondary" >
+      <IconButton color="secondary" onClick={handleCallDisconnect}>
         <CallEndIcon />
       </IconButton>
 

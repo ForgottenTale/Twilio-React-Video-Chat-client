@@ -37,15 +37,12 @@ function App() {
     setRoomName(event.target.value);
   }, []);
 
-  const handleLogout = useCallback(event => {
-    event.preventDefault()
-    setToken(null)
-  }, []);
+
   return (
     <div className="App">
      {!token ? <Join storeToken={setToken}  handleUsernameChange={handleUsernameChange}
          handleRoomNameChange={handleRoomNameChange}
-         handleSubmit={handleSubmit}/> :  <Room roomName={roomName} token={token} handleLogout={handleLogout} />}
+         handleSubmit={handleSubmit}/> :  <Room roomName={roomName} token={token} setToken={setToken} />}
     </div>
   );
 }
