@@ -1,26 +1,29 @@
+@import './main.scss';
+
 .App{
     height: 100vh;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    background-color: rgb(12, 23, 39);
+    @include flexbox(row,center);
+    background-color: $color1;
 }
 body,html{
  height: 100%;
+ background-color: $color1;
 }
 
 .error{
-    background-color: rgb(12, 23, 39);
-    
+    background-color: $color1;
     width: 100%;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flexbox(row,center);
 
     img{
         width: 50%;
         max-width: 500px;
        
 }
+}
+#root{
+    width: 100%;
+    height: 100%;
+    
 }

@@ -3,7 +3,8 @@ import Join from './components/join/join';
 import './app.scss';
 import Room from './components/room/room'
 import axios from "axios";
-import imgPic from './components/assets/404.png'
+import imgPic from './components/assets/404.png';
+import Loader from './components/loader/loader'
 
 
 function App() {
@@ -11,25 +12,30 @@ function App() {
   const [roomName, setRoomName] = useState("")
   const [token, setToken] = useState(false);
   const [handleError, setError ] = useState(false);
+  const [loading, setLoader] = useState(false);
 
   const handleSubmit = async event => {
     event.preventDefault()
-
+    setLoader(true);
     var data = {
       identity: name,
       roomname:roomName
     }
     var jwt = "";
-    var url = "";
+    var url = "http://192.168.31.168:5000/jwt";
     await axios.post(url, data).then(res => {
       if(res.status!==404){
       jwt = res.data.token;
+      setLoader(false);
       }
       else{
+        setLoader(false);
         setError(true);
+        
       }
     })
       .catch(error => {
+        setLoader(false);
         console.error(error)
         setError(true);
       })
@@ -51,6 +57,9 @@ function App() {
       </div>
     );
   }
+else if(loading){
+  return <Loader type="Connecting"/>
+}
 else{
   return (
     <div className="App">
@@ -59,6 +68,8 @@ else{
      {!token ? <Join storeToken={setToken}  handleUsernameChange={handleUsernameChange}
          handleRoomNameChange={handleRoomNameChange}
          handleSubmit={handleSubmit}/> :  <Room roomName={roomName} token={token} setToken={setToken} />}
+    
+
     </div>
   );
 }

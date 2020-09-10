@@ -5,7 +5,10 @@
     bottom: 0;
     width: 100%;
     transition:opacity .24s ease-out;
-   
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
 }
 .MuiIconButton-label svg{
@@ -14,13 +17,12 @@
     margin: 10px;
    
 }
+.Menu.open{
+    opacity: 1;
+
+}
+
 .Menu:hover{
     opacity: 1;
-    
-    background-color: white;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+
 }

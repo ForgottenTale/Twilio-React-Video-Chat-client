@@ -7,10 +7,15 @@ import CallEndIcon from '@material-ui/icons/CallEnd';
 
 import './menu.scss'
 
-function Menu({handleCallDisconnect, handleAudioToggle,handleVideoToggle,handleParticipantListToggle}) {
+function Menu({handleCallDisconnect, handleAudioToggle,handleVideoToggle,handleParticipantListToggle, toggleMenu}) {
 
+  let menuClass = 'Menu';
+  if(toggleMenu){
+    menuClass = 'Menu open';
+  }
+  
   return (
-    <div className="Menu" color="primary">
+    <div className={menuClass} color="primary">
       <IconButton color="primary" onClick={handleAudioToggle}>
         <MicIcon />
       </IconButton>

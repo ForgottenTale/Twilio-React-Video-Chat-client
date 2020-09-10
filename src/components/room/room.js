@@ -12,6 +12,7 @@ const Room = ({ roomName, token, setToken }) => {
     const [toggleAudio, setToggleAudio] = useState(true);
     const [toggleVideo, setToggleVideo] = useState(true);
     const [toggleParticipantsList, setParticipantsList] = useState(false);
+    const [toggleMenu, setToggleMenu] = useState(false)
 
 
     console.log(toggleAudio);
@@ -79,6 +80,20 @@ const Room = ({ roomName, token, setToken }) => {
         setParticipantsList((prevState)=>!prevState);
 
     }
+    const handleMenuOpen = () =>{
+        setToggleMenu(true);
+        setTimeout(
+            ()=>setToggleMenu(false),
+            3000
+        );
+      
+
+    }
+    const handleMenuClose = () =>{
+        setToggleMenu(false);
+
+    }
+
 
 
     const remoteParticipants = participants.map(participant => (
@@ -87,14 +102,14 @@ const Room = ({ roomName, token, setToken }) => {
    
   
     return (
-        <div className="room">
+        <div className="room" onMouseMove={handleMenuOpen} MouseMoveEnd={handleMenuClose}>
     
             {room ? (
                 <div className="room__participants">
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
                 </div> ) : ('')}
                 <ParticipantList participants= {participants} toggleParticipantsList={toggleParticipantsList}/>
-            <Menu handleAudioToggle={handleAudioToggle} handleVideoToggle={handleVideoToggle} handleCallDisconnect={handleCallDisconnect} handleParticipantListToggle={handleParticipantListToggle}/>
+            <Menu handleAudioToggle={handleAudioToggle} handleVideoToggle={handleVideoToggle} handleCallDisconnect={handleCallDisconnect} handleParticipantListToggle={handleParticipantListToggle} toggleMenu={toggleMenu}/>
         </div>
     );
 
