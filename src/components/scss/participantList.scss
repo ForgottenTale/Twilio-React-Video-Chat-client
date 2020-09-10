@@ -1,7 +1,11 @@
+
 .participantList{
     width: 400px;
     background-color: white;
-
+    transform:translateX(100%);
+    transition: transform 1s ease-out;
+    
+   
     &__title
     {
         width: 100%;
@@ -29,4 +33,7 @@
         }
        
     }
+}
+.participantList.open{
+    transform:translateX(0);
 }

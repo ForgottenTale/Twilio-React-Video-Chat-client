@@ -1,8 +1,8 @@
 .participant {
     position: relative;
 
+    transition: width 1s ease-in;
 
-    
     &__video {
         width: 100%;
         height: 100%;

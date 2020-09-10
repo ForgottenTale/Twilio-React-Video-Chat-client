@@ -9,9 +9,11 @@ const Room = ({ roomName, token, setToken }) => {
 
     const [room, setRoom] = useState(null);
     const [participants, setParticipants] = useState([]);
-
     const [toggleAudio, setToggleAudio] = useState(true);
     const [toggleVideo, setToggleVideo] = useState(true);
+    const [toggleParticipantsList, setParticipantsList] = useState(false);
+
+
 
     useEffect(() => {
         const participantConnected = participant => {
@@ -71,7 +73,11 @@ const Room = ({ roomName, token, setToken }) => {
             setToggleVideo(track.track.isEnabled);
         });
     };
+    
+    const handleParticipantListToggle = () =>{
+        setParticipantsList((prevState)=>!prevState);
 
+    }
 
 
     const remoteParticipants = participants.map(participant => (
@@ -80,15 +86,16 @@ const Room = ({ roomName, token, setToken }) => {
 
     return (
         <div className="room">
-            {/* <h2>Room: {roomName}</h2>
-            <button onClick={handleLogout}>Log out</button> */}
-
+    
             {room ? (
                 <div className="room__participants">
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
                 </div> ) : ('')}
-                <ParticipantList participants= {participants}/>
-            <Menu handleAudioToggle={handleAudioToggle} handleVideoToggle={handleVideoToggle} handleCallDisconnect={handleCallDisconnect} />
+                {toggleParticipantsList? <ParticipantList participants= {participants} toggleParticipantsList={toggleParticipantsList}/> : ('')
+
+                }
+                
+            <Menu handleAudioToggle={handleAudioToggle} handleVideoToggle={handleVideoToggle} handleCallDisconnect={handleCallDisconnect} handleParticipantListToggle={handleParticipantListToggle}/>
         </div>
     );
 
