@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import './scss/participant.scss';
+import './participant.scss';
 
 const Participant = ({ participant }) => {
     const [videoTracks, setVideoTracks] = useState([]);

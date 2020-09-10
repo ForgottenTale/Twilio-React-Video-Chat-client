@@ -1,6 +1,5 @@
 import React from "react";
-
-import './scss/join.scss';
+import './join.scss';
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -11,13 +10,13 @@ const useStyles = makeStyles({
     borderRadius: 4,
     boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
     textDecoration: 'white',
-    width:"300px",
+    width: "300px",
   },
-  buttonStyle:{
-    width:"300px",
-    margin:"15px",
-    color:"white",
-    
+  buttonStyle: {
+    width: "300px",
+    margin: "15px",
+    color: "white",
+
   }
 });
 function StartForm({
@@ -25,15 +24,15 @@ function StartForm({
   handleRoomNameChange,
   handleSubmit,
 }) {
-  
+
   const classes = useStyles();
 
 
   return (
 
     <form onSubmit={handleSubmit} className="joinForm">
-      <TextField 
-        label="Display Name" 
+      <TextField
+        label="Display Name"
         margin="normal"
         id="name"
         name="name"
@@ -41,10 +40,10 @@ function StartForm({
         className={classes.root}
         InputLabelProps={{ className: "joinForm__label" }}
         onChange={handleUsernameChange}
-         />
+      />
 
-      <TextField 
-        label="Room Code" 
+      <TextField
+        label="Room Code"
         margin="normal"
         id="room"
         name="room"
@@ -53,11 +52,11 @@ function StartForm({
         variant="filled"
         onChange={handleRoomNameChange} />
 
-      <Button 
-      type="submit" 
-      color="primary" 
-      className={classes.buttonStyle}
-      
+      <Button
+        type="submit"
+        color="primary"
+        className={classes.buttonStyle}
+
       >
         Join Room
         </Button>

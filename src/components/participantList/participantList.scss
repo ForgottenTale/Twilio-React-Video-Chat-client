@@ -2,8 +2,11 @@
 .participantList{
     width: 400px;
     background-color: white;
+    height: 100%;
+    position: fixed;
+    right: 0;
     transform:translateX(100%);
-    transition: transform 1s ease-out;
+    transition: transform 240ms ease-out;
     
    
     &__title
@@ -36,4 +39,6 @@
 }
 .participantList.open{
     transform:translateX(0);
+    
+    
 }

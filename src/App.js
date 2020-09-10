@@ -1,7 +1,7 @@
 import React,{useState,useCallback } from 'react';
-import Join from './components/join';
-import './components/scss/app.scss';
-import Room from './components/room'
+import Join from './components/join/join';
+import './app.scss';
+import Room from './components/room/room'
 import axios from "axios";
 
 

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
-import Participant from './participant';
-import ParticipantList from './participantList';
-import './scss/room.scss';
-import Menu from './menu'
+import Participant from '../participant/participant';
+import ParticipantList from '../participantList/participantList';
+import './room.scss';
+import Menu from '../menu/menu'
 
 const Room = ({ roomName, token, setToken }) => {
 
@@ -14,7 +14,8 @@ const Room = ({ roomName, token, setToken }) => {
     const [toggleParticipantsList, setParticipantsList] = useState(false);
 
 
-
+    console.log(toggleAudio);
+    console.log(toggleVideo);
     useEffect(() => {
         const participantConnected = participant => {
             setParticipants(prevParticipants => [...prevParticipants, participant]);
@@ -83,7 +84,8 @@ const Room = ({ roomName, token, setToken }) => {
     const remoteParticipants = participants.map(participant => (
         <Participant key={participant.sid} participant={participant} />
     ));
-
+   
+  
     return (
         <div className="room">
     
@@ -91,10 +93,7 @@ const Room = ({ roomName, token, setToken }) => {
                 <div className="room__participants">
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
                 </div> ) : ('')}
-                {toggleParticipantsList? <ParticipantList participants= {participants} toggleParticipantsList={toggleParticipantsList}/> : ('')
-
-                }
-                
+                <ParticipantList participants= {participants} toggleParticipantsList={toggleParticipantsList}/>
             <Menu handleAudioToggle={handleAudioToggle} handleVideoToggle={handleVideoToggle} handleCallDisconnect={handleCallDisconnect} handleParticipantListToggle={handleParticipantListToggle}/>
         </div>
     );

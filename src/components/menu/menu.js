@@ -5,7 +5,7 @@ import VideocamIcon from '@material-ui/icons/Videocam';
 import GroupIcon from '@material-ui/icons/Group';
 import CallEndIcon from '@material-ui/icons/CallEnd';
 
-import './scss/menu.scss'
+import './menu.scss'
 
 function Menu({handleCallDisconnect, handleAudioToggle,handleVideoToggle,handleParticipantListToggle}) {
 
