@@ -3,7 +3,6 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import './participantList.scss';
 
 function ParticipantList({ participants,toggleParticipantsList}) {
-    console.log(participants);
     var participantListClass = 'participantList';
     if(toggleParticipantsList)
     {

@@ -1,7 +1,7 @@
-
+@import '../../main.scss';
 .participantList{
     width: 400px;
-    background-color: white;
+    background-color: $color6;
     height: 100%;
     position: fixed;
     right: 0;
@@ -12,10 +12,9 @@
     &__title
     {
         width: 100%;
-        height: 60px;
-        padding-left: 20px;
-        border: none;
-        border-bottom: 1px rgb(221, 221, 221) solid;
+        height: 90px;
+        padding-left: 40px;
+        color: $color5;
         display: flex;
         align-items: center;
 
@@ -23,16 +22,24 @@
 
     &__participant{
         width: 100%;
-        height: 60px;
+        height: 70px;
         display: flex;
         align-items: center;
-        background-color: #F9F9F9;
+        background-color: $color2;
+        border: none;
 
         &__icon {
-         width: 35px;
-         height: 35px;
+         width: 34px !important;
+         height: 34px !important;
          margin-right: 20px;
-         margin-left: 20px;
+         margin-left: 70px;
+         color: $color3;
+        }
+
+        &__name{
+            color: $color5;
+            font-size: 18px;
+            font-weight: 500;
         }
        
     }
