@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import './participant.scss';
 
-const Participant = ({ participant }) => {
+const Participant = ({ participant,handleFullScreen,toggleFullScreen }) => {
     const [videoTracks, setVideoTracks] = useState([]);
     const [audioTracks, setAudioTracks] = useState([]);
 
@@ -63,8 +63,15 @@ const Participant = ({ participant }) => {
         }
     }, [audioTracks]);
 
+    if(toggleFullScreen){
+    
+    }
+    else{
+        
+    }
+
     return (
-        <div className="participant">
+        <div className="participant" onClick={handleFullScreen}>
             <h3 className ="participant__name">{participant.identity}</h3>
             <video ref={videoRef} autoPlay={true} className="participant__video"/>
             <audio ref={audioRef} autoPlay={true}  />

@@ -16,8 +16,8 @@ const Room = ({ roomName, token, setToken }) => {
     const [toggleAudio, setToggleAudio] = useState(true);     // Is true when local participant's mic is on
     const [toggleVideo, setToggleVideo] = useState(true);     // Is true when local participant's mic is off
     const [toggleParticipantsList, setParticipantsList] = useState(false);  //Is true when participant's list menu button is pressed and thus the menu slides open
-    const [toggleMenu, setToggleMenu] = useState(false)       // Is true when move moves or hover over the menu component and the menu appears
-
+    const [toggleMenu, setToggleMenu] = useState(false);      // Is true when move moves or hover over the menu component and the menu appears
+    const [toggleFullScreen, setFullScreen] = useState(false) //Is true when a local participant pins a remote participants video thus making it fullscreen
 
 
     useEffect(() => {
@@ -119,6 +119,19 @@ const Room = ({ roomName, token, setToken }) => {
 
 
     }
+
+    // Function to make a participant's video full screen
+
+    const handleFullScreen = (event) =>{
+        setFullScreen(prevState =>!prevState);
+        if(toggleFullScreen){
+          event.target.parentElement.style.position = "absolute"
+        }
+        else{
+            event.target.parentElement.style.position = "relative"
+        }
+
+    }
     
     // Adds a margin right of 400px to the room component when the participant list component is opened
     
@@ -132,9 +145,10 @@ const Room = ({ roomName, token, setToken }) => {
     // Adds remote participant's video and audio to the room component 
 
     const remoteParticipants = participants.map(participant => (
-        <Participant key={participant.sid} participant={participant} />
+        <Participant key={participant.sid} participant={participant} toggleFullScreen={toggleFullScreen} handleFullScreen={handleFullScreen}/>
     ));
-
+    
+    
 
 
 
