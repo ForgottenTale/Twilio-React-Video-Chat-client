@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Video from 'twilio-video';
 import Participant from '../participant/participant';
 import ParticipantList from '../participantList/participantList';
@@ -16,8 +16,7 @@ const Room = ({ roomName, token, setToken }) => {
     const [toggleMenu, setToggleMenu] = useState(false)
 
 
-    // console.log(toggleAudio);
-    // console.log(toggleVideo);
+
     useEffect(() => {
         const participantConnected = participant => {
             setParticipants(prevParticipants => [...prevParticipants, participant]);
@@ -63,6 +62,7 @@ const Room = ({ roomName, token, setToken }) => {
                 track.track.enable();
             }
             setToggleAudio(track.track.isEnabled);
+
         });
     };
 
@@ -81,51 +81,59 @@ const Room = ({ roomName, token, setToken }) => {
         setParticipantsList((prevState) => !prevState);
         setRoomWidth(!roomWidth);
 
-}
-const handleMenuOpen = () => {
-    setToggleMenu(true);
-    setTimeout(
-        () => setToggleMenu(false),
-        3000
+    }
+    const handleMenuOpen = () => {
+        setToggleMenu(true);
+        setTimeout(
+            () => setToggleMenu(false),
+            3000
+        );
+
+
+    }
+    const handleMenuClose = () => {
+        setToggleMenu(false);
+
+
+    }
+
+
+
+
+    const remoteParticipants = participants.map(participant => (
+        <Participant key={participant.sid} participant={participant} />
+    ));
+    var style
+    if (roomWidth) {
+        var width = String(roomwidth.current.offsetWidth - 400) + 'px';
+        console.log(width)
+        style = { width: width }
+    }
+    else {
+        style = { width: "100%" }
+    }
+
+
+
+    return (
+        <div className="room" onMouseMove={handleMenuOpen} MouseMoveEnd={handleMenuClose} ref={roomwidth} style={style}>
+
+            {room ? (
+                <div className="room__participants">
+                    <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
+                </div>) : ('')}
+            <ParticipantList participants={participants} toggleParticipantsList={toggleParticipantsList} />
+            <Menu
+                handleAudioToggle={handleAudioToggle}
+                handleVideoToggle={handleVideoToggle}
+                handleCallDisconnect={handleCallDisconnect}
+                handleParticipantListToggle={handleParticipantListToggle}
+                toggleMenu={toggleMenu}
+                toggleAudio={toggleAudio}
+                toggleVideo={toggleVideo}
+            />
+        </div>
     );
-
-
-}
-const handleMenuClose = () => {
-    setToggleMenu(false);
-
-
-}
-
-
-
-
-const remoteParticipants = participants.map(participant => (
-    <Participant key={participant.sid} participant={participant} />
-));
-
-if(roomWidth){
-    var width = String(roomwidth.current.offsetWidth-400) + 'px';
-    console.log(width)
-    var style ={width:width}
-}
-else{
-    var style ={width:"100%"}
-}
-
-
-
-return (
-    <div className="room" onMouseMove={handleMenuOpen} MouseMoveEnd={handleMenuClose} ref={roomwidth} style={style}>
-
-        {room ? (
-            <div className="room__participants">
-                <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
-            </div>) : ('')}
-        <ParticipantList participants={participants} toggleParticipantsList={toggleParticipantsList} />
-        <Menu handleAudioToggle={handleAudioToggle} handleVideoToggle={handleVideoToggle} handleCallDisconnect={handleCallDisconnect} handleParticipantListToggle={handleParticipantListToggle} toggleMenu={toggleMenu} />
-    </div>
-);
 
 };
 
