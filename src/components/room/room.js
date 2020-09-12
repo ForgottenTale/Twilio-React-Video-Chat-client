@@ -146,7 +146,7 @@ const Room = ({ roomName, token, setToken }) => {
                 <div className="room__participants">
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
                 </div>) : ('')}
-            <ParticipantList participants={participants} toggleParticipantsList={toggleParticipantsList} />
+            <ParticipantList participants={participants} toggleParticipantsList={toggleParticipantsList} key={participants.sid} />
             <Menu
                 handleAudioToggle={handleAudioToggle}
                 handleVideoToggle={handleVideoToggle}
