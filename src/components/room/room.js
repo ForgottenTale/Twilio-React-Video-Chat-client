@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from '../participant/participant';
 import ParticipantList from '../participantList/participantList';
@@ -6,35 +6,52 @@ import './room.scss';
 import Menu from '../menu/menu'
 
 const Room = ({ roomName, token, setToken }) => {
-    var roomwidth = useRef();
-    const [roomWidth, setRoomWidth] = useState(false);
-    const [room, setRoom] = useState(null);
-    const [participants, setParticipants] = useState([]);
-    const [toggleAudio, setToggleAudio] = useState(true);
-    const [toggleVideo, setToggleVideo] = useState(true);
-    const [toggleParticipantsList, setParticipantsList] = useState(false);
-    const [toggleMenu, setToggleMenu] = useState(false)
+
+
+    // All the states 
+
+    const [roomWidth, setRoomWidth] = useState(false);        // Is true when the participant list is opened and adds 400px margin right to the room class
+    const [room, setRoom] = useState(null);                   // Stores the room object 
+    const [participants, setParticipants] = useState([]);     // Stores the participant details
+    const [toggleAudio, setToggleAudio] = useState(true);     // Is true when local participant's mic is on
+    const [toggleVideo, setToggleVideo] = useState(true);     // Is true when local participant's mic is off
+    const [toggleParticipantsList, setParticipantsList] = useState(false);  //Is true when participant's list menu button is pressed and thus the menu slides open
+    const [toggleMenu, setToggleMenu] = useState(false)       // Is true when move moves or hover over the menu component and the menu appears
 
 
 
     useEffect(() => {
+
+        // Function to store the remote participant details
+
         const participantConnected = participant => {
             setParticipants(prevParticipants => [...prevParticipants, participant]);
         };
+
+        // Function to remove the remote participant details of whom disconnected from the state
+
         const participantDisconnected = participant => {
             setParticipants(prevParticipants =>
                 prevParticipants.filter(p => p !== participant)
             );
         };
+
+        // Establishing a connection to the twilio server
+
         Video.connect(token, {
             name: roomName
         }).then(room => {
             setRoom(room);
+            console.log(room);
             room.on('participantConnected', participantConnected);
             room.on('participantDisconnected', participantDisconnected);
             room.participants.forEach(participantConnected);
         });
+
+        // Removes the local participant from the room when he/she closes the window
+
         return () => {
+
             setRoom(currentRoom => {
                 if (currentRoom && currentRoom.localParticipant.state === 'connected') {
                     currentRoom.localParticipant.tracks.forEach(function (trackPublication) {
@@ -49,10 +66,14 @@ const Room = ({ roomName, token, setToken }) => {
         };
     }, [roomName, token]);
 
+    // Function to disconnect the local participant from the room
+
     const handleCallDisconnect = () => {
         room.disconnect();
         setToken(null);
     };
+    
+    // Function to disable or enable the local participant's audio
 
     const handleAudioToggle = () => {
         room.localParticipant.audioTracks.forEach(track => {
@@ -66,6 +87,8 @@ const Room = ({ roomName, token, setToken }) => {
         });
     };
 
+    // Function to disable or enable the local participant's audio
+
     const handleVideoToggle = () => {
         room.localParticipant.videoTracks.forEach(track => {
             if (track.track.isEnabled) {
@@ -77,11 +100,16 @@ const Room = ({ roomName, token, setToken }) => {
         });
     };
 
+    // Function the open or close the participant list component
+
     const handleParticipantListToggle = () => {
         setParticipantsList((prevState) => !prevState);
         setRoomWidth(!roomWidth);
 
     }
+    
+    // Function to open and close the menu when the mouse moves 
+
     const handleMenuOpen = () => {
         setToggleMenu(true);
         setTimeout(
@@ -91,32 +119,28 @@ const Room = ({ roomName, token, setToken }) => {
 
 
     }
-    const handleMenuClose = () => {
-        setToggleMenu(false);
+    
+    // Adds a margin right of 400px to the room component when the participant list component is opened
+    
+    var style;
 
+    if (roomWidth) {
 
+        style = { marginRight: "400px" }
     }
-
-
-
+    
+    // Adds remote participant's video and audio to the room component 
 
     const remoteParticipants = participants.map(participant => (
         <Participant key={participant.sid} participant={participant} />
     ));
-    var style
-    if (roomWidth) {
-        var width = String(roomwidth.current.offsetWidth - 400) + 'px';
-        console.log(width)
-        style = { width: width }
-    }
-    else {
-        style = { width: "100%" }
-    }
+
+
 
 
 
     return (
-        <div className="room" onMouseMove={handleMenuOpen} MouseMoveEnd={handleMenuClose} ref={roomwidth} style={style}>
+        <div className="room" onMouseMove={handleMenuOpen} style={style}>
 
             {room ? (
                 <div className="room__participants">
@@ -131,6 +155,7 @@ const Room = ({ roomName, token, setToken }) => {
                 toggleMenu={toggleMenu}
                 toggleAudio={toggleAudio}
                 toggleVideo={toggleVideo}
+                style ={style}
             />
         </div>
     );

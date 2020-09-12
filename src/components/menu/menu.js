@@ -42,7 +42,7 @@ const useStyles = makeStyles({
   }
 
 });
-function Menu({ handleCallDisconnect, handleAudioToggle, handleVideoToggle, handleParticipantListToggle, toggleMenu, toggleAudio, toggleVideo }) {
+function Menu({ handleCallDisconnect, handleAudioToggle, handleVideoToggle, handleParticipantListToggle, toggleMenu, toggleAudio, toggleVideo,style }) {
   const classes = useStyles();
   let menuClass = 'Menu';
   if (toggleMenu) {
@@ -50,7 +50,7 @@ function Menu({ handleCallDisconnect, handleAudioToggle, handleVideoToggle, hand
   }
 
   return (
-    <div className={menuClass} color="primary">
+    <div className={menuClass} style={style} >
       {toggleAudio ? <IconButton onClick={handleAudioToggle} className={classes.active}>< MicIcon /></IconButton> : <IconButton onClick={handleAudioToggle} className={classes.inactive}><MicOffIcon /></IconButton>}
       {toggleVideo ? <IconButton onClick={handleVideoToggle} className={classes.active}><VideocamIcon /></IconButton> : <IconButton onClick={handleVideoToggle} className={classes.inactive}><VideocamOffIcon /></IconButton>}
 

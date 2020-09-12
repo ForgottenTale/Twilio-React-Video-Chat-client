@@ -27,3 +27,11 @@ $color6: #0F203A;
     grid-template-columns: repeat($col_num,1fr);
     grid-gap: 35px;
 }
+
+// Transition function
+
+@mixin transition($pty) {
+    
+    transition: $pty 240ms ease-out;
+
+}
