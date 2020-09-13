@@ -1,0 +1,27 @@
+@import '../../main.scss';
+.join{
+    @include flexbox(row,center);
+   margin-top: auto;
+   margin-bottom: auto;
+  
+
+   &__video{
+    position: relative;
+       &__icons{
+           position: absolute;
+           bottom: 20px;
+           width: 100%;
+           @include flexbox(row,space-around)
+       }
+
+   }
+
+   &__text{
+       &__title{
+           color: $color5;
+           font-size: 1.5rem;
+           padding: 60px;
+       }
+   }
+
+}

@@ -1,5 +1,5 @@
 import React from "react";
-import './join.scss';
+import './startForm.scss';
 import { TextField, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 
@@ -36,7 +36,7 @@ function StartForm({
 
   return (
 
-    <form onSubmit={handleSubmit} className="joinForm">
+    <form onSubmit={handleSubmit} className="startForm">
       <TextField
         label="Display Name"
         margin="normal"
@@ -44,7 +44,7 @@ function StartForm({
         name="name"
         variant="filled"
         className={classes.root}
-        InputLabelProps={{ className: "joinForm__label" }}
+        InputLabelProps={{ className: "startForm__label" }}
         onChange={handleUsernameChange}
       />
 
@@ -53,7 +53,7 @@ function StartForm({
         margin="normal"
         id="room"
         name="room"
-        InputLabelProps={{ className: "joinForm__label" }}
+        InputLabelProps={{ className: "startForm__label" }}
         className={classes.root}
         variant="filled"
         onChange={handleRoomNameChange} />

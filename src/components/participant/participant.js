@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import './participant.scss';
 
-const Participant = ({ participant,handleFullScreen,toggleFullScreen }) => {
+const Participant = ({ participant,handleFullScreen}) => {
     const [videoTracks, setVideoTracks] = useState([]);
     const [audioTracks, setAudioTracks] = useState([]);
 
@@ -16,7 +16,7 @@ const Participant = ({ participant,handleFullScreen,toggleFullScreen }) => {
     useEffect(() => {
         setVideoTracks(trackpubsToTracks(participant.videoTracks));
         setAudioTracks(trackpubsToTracks(participant.audioTracks));
-
+      
         const trackSubscribed = (track) => {
             if (track.kind === "video") {
                 setVideoTracks((videoTracks) => [...videoTracks, track]);
@@ -32,7 +32,7 @@ const Participant = ({ participant,handleFullScreen,toggleFullScreen }) => {
                 setAudioTracks((audioTracks) => audioTracks.filter((a) => a !== track));
             }
         };
-
+   
         participant.on("trackSubscribed", trackSubscribed);
         participant.on("trackUnsubscribed", trackUnsubscribed);
 
@@ -63,12 +63,6 @@ const Participant = ({ participant,handleFullScreen,toggleFullScreen }) => {
         }
     }, [audioTracks]);
 
-    if(toggleFullScreen){
-    
-    }
-    else{
-        
-    }
 
     return (
         <div className="participant" onClick={handleFullScreen}>

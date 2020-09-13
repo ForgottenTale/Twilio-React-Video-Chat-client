@@ -1,10 +1,11 @@
 import React,{useState,useCallback } from 'react';
-import Join from './components/join/join';
+import StartForm from './components/startForm/startForm';
 import './app.scss';
 import Room from './components/room/room'
 import axios from "axios";
 import imgPic from './components/assets/404.png';
-import Loader from './components/loader/loader'
+import Loader from './components/loader/loader';
+// import JoinNow from './components/joinNow/join'
 
 
 function App() {
@@ -72,9 +73,10 @@ else{
     <div className="App">
 
      
-     {!token ? <Join storeToken={setToken}  handleUsernameChange={handleUsernameChange}
+     {!token ? <StartForm storeToken={setToken}  handleUsernameChange={handleUsernameChange}
          handleRoomNameChange={handleRoomNameChange}
-         handleSubmit={handleSubmit}/> :  <Room roomName={roomName} token={token} setToken={setToken} />}
+         handleSubmit={handleSubmit}/> :<Room roomName={roomName} token={token} setToken={setToken} />}
+         
     
 
     </div>

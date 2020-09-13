@@ -3,6 +3,7 @@
 .App{
     height: 100vh;
     @include flexbox(row,center);
+    align-items: unset;
     background-color: $color1;
 }
 body,html{

@@ -39,19 +39,25 @@ const Room = ({ roomName, token, setToken }) => {
         // Establishing a connection to the twilio server
 
         Video.connect(token, {
-            name: roomName
+            name: roomName,
+
         }).then(room => {
             setRoom(room);
             console.log(room);
             room.on('participantConnected', participantConnected);
             room.on('participantDisconnected', participantDisconnected);
             room.participants.forEach(participantConnected);
+            room.on('dominantSpeakerChanged', participant => {
+                console.log('The new dominant speaker in the Room is:', participant);
+              });
         });
-
+        
+       
+        
         // Removes the local participant from the room when he/she closes the window
 
         return () => {
-
+            room.disconnect();
             setRoom(currentRoom => {
                 if (currentRoom && currentRoom.localParticipant.state === 'connected') {
                     currentRoom.localParticipant.tracks.forEach(function (trackPublication) {
@@ -145,7 +151,7 @@ const Room = ({ roomName, token, setToken }) => {
     // Adds remote participant's video and audio to the room component 
 
     const remoteParticipants = participants.map(participant => (
-        <Participant key={participant.sid} participant={participant} toggleFullScreen={toggleFullScreen} handleFullScreen={handleFullScreen}/>
+                <Participant key={participant.sid} participant={participant} toggleFullScreen={toggleFullScreen} handleFullScreen={handleFullScreen} />
     ));
     
     
@@ -158,9 +164,9 @@ const Room = ({ roomName, token, setToken }) => {
 
             {room ? (
                 <div className="room__participants">
-                    <Participant key={room.localParticipant.sid} participant={room.localParticipant} /> {remoteParticipants}
+                    <Participant key={room.localParticipant.sid} participant={room.localParticipant} toggleVideo={toggleVideo} toggleAudio={toggleAudio} /> {remoteParticipants}
                 </div>) : ('')}
-            <ParticipantList participants={participants} toggleParticipantsList={toggleParticipantsList} key={participants.sid} />
+            <ParticipantList key={participants.sid}  participants={participants} toggleParticipantsList={toggleParticipantsList} />
             <Menu
                 handleAudioToggle={handleAudioToggle}
                 handleVideoToggle={handleVideoToggle}
