@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from '../participant/participant';
 import ParticipantList from '../participantList/participantList';
+import FlipMove from 'react-flip-move';
 import './room.scss';
-import Menu from '../menu/menu'
+import Menu from '../menu/menu';
 
 const Room = ({ roomName, token, setToken }) => {
 
@@ -167,7 +168,7 @@ const Room = ({ roomName, token, setToken }) => {
             room ? (
                 <div className="room"  onMouseMove={handleMenuOpen} style={style}>
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} toggleVideo={toggleVideo} toggleAudio={toggleAudio} />
-                    {remoteParticipants}
+                 {remoteParticipants}
                     <ParticipantList key={participants.sid} participants={participants} toggleParticipantsList={toggleParticipantsList} />
                     <Menu
                         handleAudioToggle={handleAudioToggle}
