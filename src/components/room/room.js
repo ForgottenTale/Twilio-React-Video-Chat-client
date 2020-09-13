@@ -57,7 +57,7 @@ const Room = ({ roomName, token, setToken }) => {
         // Removes the local participant from the room when he/she closes the window
 
         return () => {
-            room.disconnect();
+           
             setRoom(currentRoom => {
                 if (currentRoom && currentRoom.localParticipant.state === 'connected') {
                     currentRoom.localParticipant.tracks.forEach(function (trackPublication) {
