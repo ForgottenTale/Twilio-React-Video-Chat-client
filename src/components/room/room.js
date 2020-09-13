@@ -49,15 +49,15 @@ const Room = ({ roomName, token, setToken }) => {
             room.participants.forEach(participantConnected);
             room.on('dominantSpeakerChanged', participant => {
                 console.log('The new dominant speaker in the Room is:', participant);
-              });
+            });
         });
-        
-       
-        
+
+
+
         // Removes the local participant from the room when he/she closes the window
 
         return () => {
-           
+
             setRoom(currentRoom => {
                 if (currentRoom && currentRoom.localParticipant.state === 'connected') {
                     currentRoom.localParticipant.tracks.forEach(function (trackPublication) {
@@ -78,7 +78,7 @@ const Room = ({ roomName, token, setToken }) => {
         room.disconnect();
         setToken(null);
     };
-    
+
     // Function to disable or enable the local participant's audio
 
     const handleAudioToggle = () => {
@@ -113,7 +113,7 @@ const Room = ({ roomName, token, setToken }) => {
         setRoomWidth(!roomWidth);
 
     }
-    
+
     // Function to open and close the menu when the mouse moves 
 
     const handleMenuOpen = () => {
@@ -128,56 +128,60 @@ const Room = ({ roomName, token, setToken }) => {
 
     // Function to make a participant's video full screen
 
-    const handleFullScreen = (event) =>{
-        setFullScreen(prevState =>!prevState);
-        if(toggleFullScreen){
-          event.target.parentElement.style.position = "absolute"
+    const handleFullScreen = (event) => {
+        setFullScreen(prevState => !prevState);
+        if (toggleFullScreen) {
+            event.target.parentElement.style.position = "absolute";
+            event.target.parentElement.style.zIndex = "3"
         }
-        else{
-            event.target.parentElement.style.position = "relative"
+        else {
+            event.target.parentElement.style.position = "relative";
+            event.target.parentElement.style.zIndex = "1"
         }
 
     }
-    
+
     // Adds a margin right of 400px to the room component when the participant list component is opened
-    
+
     var style;
 
     if (roomWidth) {
 
         style = { marginRight: "400px" }
     }
-    
+
     // Adds remote participant's video and audio to the room component 
 
     const remoteParticipants = participants.map(participant => (
-                <Participant key={participant.sid} participant={participant} toggleFullScreen={toggleFullScreen} handleFullScreen={handleFullScreen} />
+        <Participant key={participant.sid} participant={participant} toggleFullScreen={toggleFullScreen} handleFullScreen={handleFullScreen} />
     ));
-    
-    
+
+
 
 
 
 
     return (
-        <div className="room" onMouseMove={handleMenuOpen} style={style}>
+        
 
-            {room ? (
-                <div className="room__participants">
-                    <Participant key={room.localParticipant.sid} participant={room.localParticipant} toggleVideo={toggleVideo} toggleAudio={toggleAudio} /> {remoteParticipants}
-                </div>) : ('')}
-            <ParticipantList key={participants.sid}  participants={participants} toggleParticipantsList={toggleParticipantsList} />
-            <Menu
-                handleAudioToggle={handleAudioToggle}
-                handleVideoToggle={handleVideoToggle}
-                handleCallDisconnect={handleCallDisconnect}
-                handleParticipantListToggle={handleParticipantListToggle}
-                toggleMenu={toggleMenu}
-                toggleAudio={toggleAudio}
-                toggleVideo={toggleVideo}
-                style ={style}
-            />
-        </div>
+            room ? (
+                <div className="room"  onMouseMove={handleMenuOpen} style={style}>
+                    <Participant key={room.localParticipant.sid} participant={room.localParticipant} toggleVideo={toggleVideo} toggleAudio={toggleAudio} />
+                    {remoteParticipants}
+                    <ParticipantList key={participants.sid} participants={participants} toggleParticipantsList={toggleParticipantsList} />
+                    <Menu
+                        handleAudioToggle={handleAudioToggle}
+                        handleVideoToggle={handleVideoToggle}
+                        handleCallDisconnect={handleCallDisconnect}
+                        handleParticipantListToggle={handleParticipantListToggle}
+                        toggleMenu={toggleMenu}
+                        toggleAudio={toggleAudio}
+                        toggleVideo={toggleVideo}
+                        style={style}
+                    />
+                </div>) : ('')
+
+        
     );
 
 };
