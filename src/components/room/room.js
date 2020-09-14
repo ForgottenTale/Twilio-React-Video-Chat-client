@@ -2,9 +2,10 @@ import React, { useState, useEffect } from 'react';
 import Video from 'twilio-video';
 import Participant from '../participant/participant';
 import ParticipantList from '../participantList/participantList';
-import FlipMove from 'react-flip-move';
 import './room.scss';
 import Menu from '../menu/menu';
+import Warning from '../warning/warning';
+
 
 const Room = ({ roomName, token, setToken }) => {
 
@@ -19,6 +20,7 @@ const Room = ({ roomName, token, setToken }) => {
     const [toggleParticipantsList, setParticipantsList] = useState(false);  //Is true when participant's list menu button is pressed and thus the menu slides open
     const [toggleMenu, setToggleMenu] = useState(false);      // Is true when move moves or hover over the menu component and the menu appears
     const [toggleFullScreen, setFullScreen] = useState(false) //Is true when a local participant pins a remote participants video thus making it fullscreen
+    const [toggleWarning, setWarning] = useState(false); // If true, the waring component will be displayed
 
 
     useEffect(() => {
@@ -142,6 +144,22 @@ const Room = ({ roomName, token, setToken }) => {
 
     }
 
+    // Function to set warning 
+
+    const handleWarning = ()=>{
+        setWarning(prevState=>!prevState);
+    }
+
+
+    const handleRemoveParticipant=(participant)=>{
+        console.log(participant.update);
+        // participant.state = "disconnected";
+        // Video.video.rooms(roomName).participants(participant.identity).update({status: 'disconnected'})
+        // .then(participant => {
+        //   console.log(participant.status);
+        // });
+    }
+
     // Adds a margin right of 400px to the room component when the participant list component is opened
 
     var style;
@@ -169,7 +187,7 @@ const Room = ({ roomName, token, setToken }) => {
                 <div className="room"  onMouseMove={handleMenuOpen} style={style}>
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} toggleVideo={toggleVideo} toggleAudio={toggleAudio} />
                  {remoteParticipants}
-                    <ParticipantList key={participants.sid} participants={participants} toggleParticipantsList={toggleParticipantsList} />
+                    <ParticipantList key={participants.sid} participants={participants} toggleParticipantsList={toggleParticipantsList}  handleRemoveParticipant={ handleRemoveParticipant}/>
                     <Menu
                         handleAudioToggle={handleAudioToggle}
                         handleVideoToggle={handleVideoToggle}
@@ -184,6 +202,9 @@ const Room = ({ roomName, token, setToken }) => {
 
         
     );
+    // return(
+    //     <Warning message="Are you sure to remove this participant ?"/>
+    // )
 
 };
 
