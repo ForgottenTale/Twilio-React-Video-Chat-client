@@ -7,7 +7,7 @@ import Menu from '../menu/menu';
 import Warning from '../warning/warning';
 
 
-const Room = ({ roomName, token, setToken }) => {
+const Room = ({ roomName, token, setToken,setReconnection }) => {
 
 
     // All the states 
@@ -53,7 +53,21 @@ const Room = ({ roomName, token, setToken }) => {
             room.on('dominantSpeakerChanged', participant => {
                 console.log('The new dominant speaker in the Room is:', participant);
             });
-        });
+            room.once('disconnected', (room, error) => {
+                if (error) {
+                  console.log('You were disconnected from the Room:', error.code, error.message);
+                  setReconnection(true);
+                }
+              });
+            
+        }).catch(error => {
+            if ('code' in error) {
+              // Handle connection error here.
+              console.error('Failed to join Room:', error.code, error.message);
+              setReconnection(true);
+            }
+          });
+          
 
 
 
@@ -73,7 +87,7 @@ const Room = ({ roomName, token, setToken }) => {
                 }
             });
         };
-    }, [roomName, token]);
+    }, [roomName, token,setReconnection]);
 
     // Function to disconnect the local participant from the room
 
