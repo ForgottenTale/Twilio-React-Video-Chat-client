@@ -23,8 +23,8 @@ function App() {
   var appRef = useRef();
 
   var jwt = "";
-  var url = "http://192.168.31.168:5000/jwt";
-  // var url ="https://videochatserver2.herokuapp.com/jwt";
+ 
+  var url ="https://videochatserver2.herokuapp.com/jwt";
 
   const handleSubmit = async event => {
 
