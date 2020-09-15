@@ -23,7 +23,12 @@ const useStyles = makeStyles({
       boxShadow: '0 3px 5px 2px rgba(33, 203, 243, .3)',
     }
 
-  }
+  },
+  input: {
+    color: "white"
+  },
+
+
 });
 function StartForm({
   handleUsernameChange,
@@ -44,7 +49,11 @@ function StartForm({
         name="name"
         variant="filled"
         className={classes.root}
+        InputProps={{
+          className: classes.input
+        }}
         InputLabelProps={{ className: "startForm__label" }}
+
         onChange={handleUsernameChange}
       />
 
@@ -60,7 +69,7 @@ function StartForm({
 
       <Button
         type="submit"
-        
+
         className={classes.buttonStyle}
 
       >

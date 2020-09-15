@@ -1,4 +1,4 @@
-import React, { useState, useEffect,useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import Video from 'twilio-video';
 import Participant from '../participant/participant';
 import ParticipantList from '../participantList/participantList';
@@ -9,7 +9,7 @@ import Loader from '../loader/loader';
 // import axios from "axios";
 
 
-const Room = ({ roomName, token, setToken,setReconnection }) => {
+const Room = ({ roomName, token, setToken,setReconnection,isMobile }) => {
 
 
     // All the states 
@@ -24,7 +24,7 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
     const [toggleFullScreen, setFullScreen] = useState(false) //Is true when a local participant pins a remote participants video thus making it fullscreen
     // const [toggleWarning, setWarning] = useState(false); // If true, the waring component will be displayed
     
-    var roomRef = useRef();
+ 
 
     useEffect(() => {
 
@@ -49,7 +49,6 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
 
         }).then(room => {
             setRoom(room);
-            console.log(room);
             room.on('participantConnected', participantConnected);
             room.on('participantDisconnected', participantDisconnected);
             room.participants.forEach(participantConnected);
@@ -135,13 +134,10 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
 
     const handleParticipantListToggle = () => {
         setParticipantsList((prevState) => !prevState);
-        if(roomRef.current.offsetWidth>=1360){
+        if(!isMobile){
             setRoomWidth(!roomWidth);
         }
         
-
-   
-
     }
 
     // Function to open and close the menu when the mouse moves 
@@ -225,7 +221,7 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
         
 
             room ? (
-                <div className="room"  onMouseMove={handleMenuOpen} style={style} ref={roomRef}>
+                <div className="room"  onMouseMove={handleMenuOpen} style={style}>
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} toggleVideo={toggleVideo} toggleAudio={toggleAudio} />
                  {remoteParticipants}
                     <ParticipantList key={participants.sid} participants={participants} toggleParticipantsList={toggleParticipantsList}/>
