@@ -1,11 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect,useRef } from 'react';
 import Video from 'twilio-video';
 import Participant from '../participant/participant';
 import ParticipantList from '../participantList/participantList';
 import './room.scss';
 import Menu from '../menu/menu';
-import Warning from '../warning/warning';
+// import Warning from '../warning/warning';
 import Loader from '../loader/loader';
+// import axios from "axios";
 
 
 const Room = ({ roomName, token, setToken,setReconnection }) => {
@@ -21,8 +22,9 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
     const [toggleParticipantsList, setParticipantsList] = useState(false);  //Is true when participant's list menu button is pressed and thus the menu slides open
     const [toggleMenu, setToggleMenu] = useState(false);      // Is true when move moves or hover over the menu component and the menu appears
     const [toggleFullScreen, setFullScreen] = useState(false) //Is true when a local participant pins a remote participants video thus making it fullscreen
-    const [toggleWarning, setWarning] = useState(false); // If true, the waring component will be displayed
-
+    // const [toggleWarning, setWarning] = useState(false); // If true, the waring component will be displayed
+    
+    var roomRef = useRef();
 
     useEffect(() => {
 
@@ -133,7 +135,12 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
 
     const handleParticipantListToggle = () => {
         setParticipantsList((prevState) => !prevState);
-        setRoomWidth(!roomWidth);
+        if(roomRef.current.offsetWidth>=1360){
+            setRoomWidth(!roomWidth);
+        }
+        
+
+   
 
     }
 
@@ -166,19 +173,33 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
 
     // Function to set warning 
 
-    const handleWarning = ()=>{
-        setWarning(prevState=>!prevState);
-    }
+    // const handleWarning = ()=>{
+    //     setWarning(prevState=>!prevState);
+    // }
 
 
-    const handleRemoveParticipant=(participant)=>{
-        console.log(participant.update);
-        // participant.state = "disconnected";
-        // Video.video.rooms(roomName).participants(participant.identity).update({status: 'disconnected'})
-        // .then(participant => {
-        //   console.log(participant.status);
-        // });
-    }
+    // const handleRemoveParticipant =  (event)=>{
+
+        // var data ={
+        //     room : roomName,
+        //     identity : participant.identity
+        // }
+        
+        // var url = "http://192.168.31.168:5000/room/removeparticipant";
+
+        // await axios.post(url, data).then(res => {
+        //     if(res.status!==404){
+        //     console.log("Participant Removed");
+
+        //     }
+        //   })
+        //     .catch(error => {
+              
+        //       console.error(error)
+           
+        //     })
+        
+    // }
 
     // Adds a margin right of 400px to the room component when the participant list component is opened
 
@@ -204,10 +225,10 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
         
 
             room ? (
-                <div className="room"  onMouseMove={handleMenuOpen} style={style}>
+                <div className="room"  onMouseMove={handleMenuOpen} style={style} ref={roomRef}>
                     <Participant key={room.localParticipant.sid} participant={room.localParticipant} toggleVideo={toggleVideo} toggleAudio={toggleAudio} />
                  {remoteParticipants}
-                    <ParticipantList key={participants.sid} participants={participants} toggleParticipantsList={toggleParticipantsList}  handleRemoveParticipant={ handleRemoveParticipant}/>
+                    <ParticipantList key={participants.sid} participants={participants} toggleParticipantsList={toggleParticipantsList}/>
                     <Menu
                         handleAudioToggle={handleAudioToggle}
                         handleVideoToggle={handleVideoToggle}

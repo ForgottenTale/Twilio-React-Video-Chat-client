@@ -23,7 +23,7 @@ return(
     <p className="reconnecting__des">Would you like to reconnect or leave ?</p>
     <div className="reconnecting__buttons">
         <Button onClick={handleSubmit} color="primary">Reconnect</Button>
-        <Button onClick={()=>{setToken(null);}}  color="secondary">Leave</Button>
+        <Button onClick={()=>{setToken(false);}}  color="secondary">Leave</Button>
     </div>
     </div>
 );

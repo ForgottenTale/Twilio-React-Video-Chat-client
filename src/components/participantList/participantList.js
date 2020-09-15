@@ -1,9 +1,14 @@
 import React from 'react';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import './participantList.scss';
-import { Button } from '@material-ui/core';
+import { Scrollbars } from 'react-custom-scrollbars';
 
-function ParticipantList({ participants, toggleParticipantsList,handleRemoveParticipant }) {
+
+
+
+function ParticipantList({ participants, toggleParticipantsList }) {
+
+
 
     var participantListClass = 'participantList';
 
@@ -22,12 +27,14 @@ function ParticipantList({ participants, toggleParticipantsList,handleRemovePart
             <p className="participantList__participant__name">{participant.identity}</p>
             <p className="participantList__participant__role">Participant</p>
             </div>
-            <Button onClick={handleRemoveParticipant(participant)}>Remove</Button>
+
         </div>)
 
     return (<div className={participantListClass}>
         <h3 className="participantList__title">Participants</h3>
+        <Scrollbars style={{ width: "100%", height: "100%" }}>
         {participantList}
+        </Scrollbars>
     </div>
 
     );
