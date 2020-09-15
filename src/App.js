@@ -19,7 +19,8 @@ function App() {
   const [loading, setLoader] = useState(false);
   const [reconnecting, setReconnection] = useState(false);
   var jwt = "";
-  var url = "http://192.168.31.168:5000/jwt";
+  // var url = "http://192.168.31.168:5000/jwt";
+  var url ="https://videochatserver2.herokuapp.com/jwt";
 
   const handleSubmit = async event => {
     event.preventDefault();
@@ -35,7 +36,7 @@ function App() {
         roomname:roomName
       }
  
-    // var url ="https://videochatserver2.herokuapp.com/jwt";
+    
 
     await axios.post(url, data).then(res => {
       if(res.status!==404){
