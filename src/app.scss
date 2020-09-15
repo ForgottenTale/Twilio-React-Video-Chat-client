@@ -5,6 +5,7 @@
     @include flexbox(row,center);
     align-items: unset;
     background-color: $color1;
+    overflow: hidden;
 }
 body,html{
  height: 100%;
