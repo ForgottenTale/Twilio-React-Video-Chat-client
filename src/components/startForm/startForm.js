@@ -63,6 +63,9 @@ function StartForm({
         id="room"
         name="room"
         InputLabelProps={{ className: "startForm__label" }}
+        InputProps={{
+          className: classes.input
+        }}
         className={classes.root}
         variant="filled"
         onChange={handleRoomNameChange} />
