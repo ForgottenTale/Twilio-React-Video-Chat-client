@@ -5,6 +5,7 @@ import ParticipantList from '../participantList/participantList';
 import './room.scss';
 import Menu from '../menu/menu';
 import Warning from '../warning/warning';
+import Loader from '../loader/loader';
 
 
 const Room = ({ roomName, token, setToken,setReconnection }) => {
@@ -69,23 +70,28 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
           });
           
 
+        const cleanup= () =>{
+            setRoom(currentRoom => {
+                    if (currentRoom && currentRoom.localParticipant.state === 'connected') {
+                        currentRoom.localParticipant.tracks.forEach(function (trackPublication) {
+                            trackPublication.track.stop();
+                        });
+                        currentRoom.disconnect();
+                        console.log("disconnected")
+                        return null;
+                    } else {
+                        return currentRoom;
+                    }
+                });
+        
 
+        }
 
         // Removes the local participant from the room when he/she closes the window
 
         return () => {
 
-            setRoom(currentRoom => {
-                if (currentRoom && currentRoom.localParticipant.state === 'connected') {
-                    currentRoom.localParticipant.tracks.forEach(function (trackPublication) {
-                        trackPublication.track.stop();
-                    });
-                    currentRoom.disconnect();
-                    return null;
-                } else {
-                    return currentRoom;
-                }
-            });
+            cleanup();
         };
     }, [roomName, token,setReconnection]);
 
@@ -212,7 +218,8 @@ const Room = ({ roomName, token, setToken,setReconnection }) => {
                         toggleVideo={toggleVideo}
                         style={style}
                     />
-                </div>) : ('')
+                </div>) : <Loader type="Connecting"/>
+
 
         
     );
