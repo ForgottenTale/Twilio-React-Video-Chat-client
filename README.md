@@ -26,3 +26,4 @@ npm install
 ```
 npm start 
 ```
+![Test Image 1](pic.png)
