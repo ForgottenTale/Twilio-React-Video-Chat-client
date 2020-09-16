@@ -6,25 +6,24 @@ import imgPic from './components/assets/404.png';
 import Loader from './components/loader/loader';
 import Reconnection from './components/reconnection/reconnecting';
 import './app.scss';
-// import JoinNow from './components/joinNow/join'
 
 
 function App() {
 
 
-  const [name, setUsername] = useState(null)
-  const [roomName, setRoomName] = useState(null)
-  const [token, setToken] = useState(false);
-  const [handleError, setError] = useState(false);
-  const [loading, setLoader] = useState(false);
-  const [reconnecting, setReconnection] = useState(false);
-  const [isMobile, setIsMobile] = useState(false);
+  const [name, setUsername] = useState(null)       // stores the name of the local participant
+  const [roomName, setRoomName] = useState(null)   // Stores the name of the room
+  const [token, setToken] = useState(false);       // Stores the token given by twilio api
+  const [handleError, setError] = useState(false); // is true when an error occurs in the axios api
+  const [loading, setLoader] = useState(false);    // When true loader component is rendered
+  const [reconnecting, setReconnection] = useState(false); // when true the reconnecting component is rendered
+  const [isMobile, setIsMobile] = useState(false); // When true the animation to the room component is removed
 
   var appRef = useRef();
 
-  var jwt = "";
+  var jwt = ""; // jwt is set to null
  
-  var url ="https://videochatserver2.herokuapp.com/jwt";
+  var url = ""; // Enter your server url here
 
   const handleSubmit = async event => {
 
